@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    [SerializeField] private BoidSettings _settings;
-    public BoidSettings Settings => _settings;
-    [SerializeField] private float _maxLinearSpeed = 5f;
-    [SerializeField] private float _maxAngularSpeedDeg = 180f; 
-    [SerializeReference, SubclassSelector]
-    private SteeringBehaviour[] _steering = Array.Empty<SteeringBehaviour>();
+    [SerializeField] private BoidSettings settings;
+    public BoidSettings Settings => settings;
+    [SerializeField] private float maxLinearSpeed = 5f;
+    [SerializeField] private float maxAngularSpeed = 180f;
+    [SerializeReference, SubclassSelector] private SteeringBehaviour[] steerings = Array.Empty<SteeringBehaviour>();
 
     private float3 _velocity;
-    private float   _angularVelocity; 
+    private float _angularVelocity;
 
-    public float  MaxLinearSpeed   => _maxLinearSpeed;
-    public float  MaxAngularSpeed  => math.radians(_maxAngularSpeedDeg);
+    public float MaxLinearSpeed => maxLinearSpeed;
+    public float MaxAngularSpeed => math.radians(maxAngularSpeed);
 
-    public float3 LinearVelocity   => _velocity;
-    public float   AngularVelocity => _angularVelocity;
+    public float3 LinearVelocity => _velocity;
+    public float AngularVelocity => _angularVelocity;
 
     public float3 Position
     {
-        get => (float3)transform.position;
-        private set => transform.position = (Vector3)value;
+        get => transform.position;
+        private set => transform.position = value;
     }
 
     public float Orientation
@@ -34,38 +33,41 @@ public class Agent : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float3 linearAccel = float3.zero;
-        float  angularAccel = 0f;
-        float  dt = Time.fixedDeltaTime;
+        float3 linearAcceleration = float3.zero;
+        float angularAcceleration = 0f;
+        float dt = Time.fixedDeltaTime;
 
-        foreach (var sb in _steering)
+        foreach (var steeringBehaviour in steerings)
         {
-            var s = sb.GetSteering(this);
-            linearAccel  += s.Linear;
-            angularAccel += s.Angular;
+            var steeringOutput = steeringBehaviour.GetSteering(this);
+            linearAcceleration += steeringOutput.Linear;
+            angularAcceleration += steeringOutput.Angular;
         }
 
-        _velocity        += linearAccel * dt;
-        _angularVelocity += angularAccel * dt;
+        _velocity += linearAcceleration * dt;
+        _angularVelocity += angularAcceleration * dt;
 
         _velocity = math.normalizesafe(_velocity) * math.min(math.length(_velocity), MaxLinearSpeed);
         _angularVelocity = math.clamp(_angularVelocity, -MaxAngularSpeed, MaxAngularSpeed);
 
-        Position    += _velocity * dt;
+        Position += _velocity * dt;
         Orientation += _angularVelocity * dt;
 
         while (Position.x > 10)
         {
             Position = new float3(Position.x - 20, Position.y, 0);
         }
+
         while (Position.x < -10)
         {
             Position = new float3(Position.x + 20, Position.y, 0);
         }
+
         while (Position.y > 5)
         {
             Position = new float3(Position.x, Position.y - 10, 0);
         }
+
         while (Position.y < -5)
         {
             Position = new float3(Position.x, Position.y + 10, 0);
@@ -78,8 +80,6 @@ public class Agent : MonoBehaviour
         if (math.length(LinearVelocity.x) > 0.01f)
         {
             float angleDeg = Mathf.Atan2(LinearVelocity.y, LinearVelocity.x) * Mathf.Rad2Deg;
-
-            // se il tuo sprite punta "su", sottrai 90°; altrimenti togli questo offset
             angleDeg -= 90f;
 
             transform.rotation = Quaternion.Euler(0f, 0f, angleDeg);

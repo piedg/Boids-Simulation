@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -10,32 +11,36 @@ public class AlignmentBehaviour : SteeringBehaviour
     public override SteeringOutput GetSteering(Agent agent)
     {
         var settings = agent.Settings;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(agent.Position.xy, settings.AlignmentRadius, settings.BoidLayer);
-        List<Agent> neighbors = new List<Agent>();
         
-        foreach (var col in colliders)
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(agent.Position.xy, settings.AlignmentRadius, settings.BoidLayer);
+
+        var neighbors = colliders
+            .Select(collider => collider.GetComponent<Agent>())
+            .Where(neighborAgent => neighborAgent != agent)
+            .ToArray();
+
+        if (neighbors.Length == 0)
         {
-            Agent neighbor = col.GetComponent<Agent>();
-            if (neighbor != agent)
+            return new SteeringOutput
             {
-                neighbors.Add(neighbor);
-            }
+                Linear = float3.zero, 
+                Angular = 0f
+            }; 
         }
 
-        if (neighbors.Count == 0)
-            return new SteeringOutput { Linear = float3.zero, Angular = 0f };
+        float3 averageVelocity = float3.zero;
+        foreach (var neighbor in neighbors)
+        {
+            averageVelocity += neighbor.LinearVelocity;
+        }
+        averageVelocity /= neighbors.Length;
 
-        float3 avgVel = float3.zero;
-        foreach (var b in neighbors)
-            avgVel += b.LinearVelocity;
-        avgVel /= neighbors.Count;
-
-        avgVel.z = 0;
-        float3 desired = math.normalizesafe(avgVel) * maxAcceleration;
+        averageVelocity.z = 0;
+        float3 desiredVelocity = math.normalizesafe(averageVelocity) * maxAcceleration;
 
         return new SteeringOutput
         {
-            Linear  = desired,
+            Linear  = desiredVelocity,
             Angular = 0f
         };
     }

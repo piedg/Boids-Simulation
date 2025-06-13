@@ -18,7 +18,7 @@ public class BoidsManager : MonoBehaviour
    [Range(0, 100)]
    [SerializeField] private int currentBoids;
    
-   private float deltaTime = 0.0f;
+   private float _deltaTime = 0.0f;
 
    private void Start()
    {
@@ -33,8 +33,6 @@ public class BoidsManager : MonoBehaviour
       currentBoidsSlider.onValueChanged.AddListener(OnCurrentBoidsChanged);
    }
 
-   
-   
    private void Update()
    {
        for (int i = 0; i < Boids.Count; i++)
@@ -42,7 +40,7 @@ public class BoidsManager : MonoBehaviour
            Boids[i].SetActive(i < currentBoids);
        }
        
-       deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+       _deltaTime += (Time.unscaledDeltaTime - _deltaTime) * 0.1f;
        fpsCounterText.text = FPSCounter();
    }
 
@@ -69,7 +67,7 @@ public class BoidsManager : MonoBehaviour
 
    private string FPSCounter()
    {
-       float fps = 1.0f / deltaTime;
+       float fps = 1.0f / _deltaTime;
        return $"FPS: {fps:0.}";
    }
 }

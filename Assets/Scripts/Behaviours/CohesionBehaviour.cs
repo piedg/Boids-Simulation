@@ -11,19 +11,22 @@ public class CohesionBehaviour : SteeringBehaviour
     {
         var settings = agent.Settings;
 
-        // Trova i vicini usando il layer dei boid
         Collider2D[] colliders = Physics2D.OverlapCircleAll(agent.Position.xy, settings.CohesionRadius, settings.BoidLayer);
 
         var neighbors = colliders
-            .Select(c => c.GetComponent<Agent>())
-            .Where(b => b != agent)
+            .Select(collider => collider.GetComponent<Agent>())
+            .Where(neighborAgent => neighborAgent != agent)
             .ToArray();
 
         if (neighbors.Length == 0)
             return new SteeringOutput { Linear = float3.zero, Angular = 0f };
 
         float3 center = float3.zero;
-        foreach (var b in neighbors) center += b.Position;
+        foreach (var neighbor in neighbors)
+        {
+            center += neighbor.Position;
+        }
+        
         center /= neighbors.Length;
 
         float3 dir = center - agent.Position;
