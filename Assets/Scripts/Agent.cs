@@ -8,7 +8,7 @@ public class Agent : MonoBehaviour
     public BoidSettings Settings => settings;
     [SerializeField] private float maxLinearSpeed = 5f;
     [SerializeField] private float maxAngularSpeed = 180f;
-    [SerializeReference, SubclassSelector] private SteeringBehaviour[] steerings = Array.Empty<SteeringBehaviour>();
+    [SerializeReference, SubclassSelector] private SteeringBehaviour[] steering = Array.Empty<SteeringBehaviour>();
 
     private float3 _velocity;
     private float _angularVelocity;
@@ -37,7 +37,7 @@ public class Agent : MonoBehaviour
         float angularAcceleration = 0f;
         float dt = Time.fixedDeltaTime;
 
-        foreach (var steeringBehaviour in steerings)
+        foreach (var steeringBehaviour in steering)
         {
             var steeringOutput = steeringBehaviour.GetSteering(this);
             linearAcceleration += steeringOutput.Linear;

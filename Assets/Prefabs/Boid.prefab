@@ -133,22 +133,22 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 6f9d94ef60ba6974f80b294d20283e55, type: 2}
   maxLinearSpeed: 5
   maxAngularSpeed: 180
-  steerings:
-  - rid: 1496326779709161472
-  - rid: 1496326779709161473
-  - rid: 1496326779709161474
+  steering:
+  - rid: 1496326779709161475
+  - rid: 1496326779709161476
+  - rid: 1496326779709161477
   references:
     version: 2
     RefIds:
-    - rid: 1496326779709161472
+    - rid: 1496326779709161475
       type: {class: CohesionBehaviour, ns: , asm: Assembly-CSharp}
       data:
         maxAcceleration: 10
-    - rid: 1496326779709161473
+    - rid: 1496326779709161476
       type: {class: SeparationBehaviour, ns: , asm: Assembly-CSharp}
       data:
         maxAcceleration: 10
-    - rid: 1496326779709161474
+    - rid: 1496326779709161477
       type: {class: AlignmentBehaviour, ns: , asm: Assembly-CSharp}
       data:
         maxAcceleration: 10
