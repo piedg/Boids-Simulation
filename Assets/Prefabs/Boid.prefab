@@ -130,28 +130,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76baefdbe6d4d418364c25fe04dc009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settings: {fileID: 11400000, guid: 6f9d94ef60ba6974f80b294d20283e55, type: 2}
-  _maxLinearSpeed: 5
-  _maxAngularSpeedDeg: 180
-  _steering:
-  - rid: 1496326763539857435
-  - rid: 1496326763539857433
-  - rid: 1496326763539857430
+  settings: {fileID: 11400000, guid: 6f9d94ef60ba6974f80b294d20283e55, type: 2}
+  maxLinearSpeed: 5
+  maxAngularSpeed: 180
+  steerings:
+  - rid: 1496326779709161472
+  - rid: 1496326779709161473
+  - rid: 1496326779709161474
   references:
     version: 2
     RefIds:
-    - rid: 1496326763539857430
-      type: {class: AlignmentBehaviour, ns: , asm: Assembly-CSharp}
+    - rid: 1496326779709161472
+      type: {class: CohesionBehaviour, ns: , asm: Assembly-CSharp}
       data:
-        maxAcceleration: 5
-    - rid: 1496326763539857433
+        maxAcceleration: 10
+    - rid: 1496326779709161473
       type: {class: SeparationBehaviour, ns: , asm: Assembly-CSharp}
       data:
         maxAcceleration: 10
-    - rid: 1496326763539857435
-      type: {class: CohesionBehaviour, ns: , asm: Assembly-CSharp}
+    - rid: 1496326779709161474
+      type: {class: AlignmentBehaviour, ns: , asm: Assembly-CSharp}
       data:
-        maxAcceleration: 5
+        maxAcceleration: 10
 --- !u!58 &611017699644199321
 CircleCollider2D:
   m_ObjectHideFlags: 0
