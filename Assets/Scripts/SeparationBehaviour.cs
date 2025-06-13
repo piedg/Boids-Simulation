@@ -1,5 +1,4 @@
 using System.Linq;
-using System;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -11,8 +10,13 @@ public class SeparationBehaviour : SteeringBehaviour
     public override SteeringOutput GetSteering(Agent agent)
     {
         var settings = agent.Settings;
-        var neighbors = GameObject.FindObjectsOfType<Agent>()
-            .Where(b => b != agent && math.distance(agent.Position.xy, b.Position.xy) < settings.SeparationRadius)
+
+        // Usa OverlapCircleAll per trovare collider nel raggio definito
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(agent.Position.xy, settings.SeparationRadius, settings.BoidLayer);
+
+        var neighbors = colliders
+            .Select(col => col.GetComponent<Agent>())
+            .Where(b => b != agent)
             .ToArray();
 
         if (neighbors.Length == 0)
@@ -30,7 +34,7 @@ public class SeparationBehaviour : SteeringBehaviour
 
         return new SteeringOutput
         {
-            Linear  = repulse,
+            Linear = repulse,
             Angular = 0f
         };
     }

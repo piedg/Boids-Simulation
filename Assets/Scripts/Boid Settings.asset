@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4aab76dde36bd409402392c35126e9, type: 3}
   m_Name: Boid Settings
   m_EditorClassIdentifier: 
-  CohesionRadius: 5
-  AlignmentRadius: 5
-  SeparationRadius: 5
+  CohesionRadius: 6
+  AlignmentRadius: 3
+  SeparationRadius: 6
+  BoidLayer:
+    serializedVersion: 2
+    m_Bits: 64
