@@ -31,7 +31,6 @@ public class SeparationBehaviour : SteeringBehaviour
             offset.z = 0;
             repulse += math.normalize(offset) / math.length(offset);
         }
-
         repulse = math.normalizesafe(repulse) * maxAcceleration;
 
         return new SteeringOutput

@@ -28,6 +28,7 @@ public class AlignmentBehaviour : SteeringBehaviour
         }
 
         float3 averageVelocity = float3.zero;
+        
         foreach (var neighbor in neighbors)
         {
             averageVelocity += neighbor.LinearVelocity;

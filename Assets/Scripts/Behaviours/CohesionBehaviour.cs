@@ -19,14 +19,16 @@ public class CohesionBehaviour : SteeringBehaviour
             .ToArray();
 
         if (neighbors.Length == 0)
+        {
             return new SteeringOutput { Linear = float3.zero, Angular = 0f };
+        }
 
         float3 center = float3.zero;
+        
         foreach (var neighbor in neighbors)
         {
             center += neighbor.Position;
         }
-        
         center /= neighbors.Length;
 
         float3 dir = center - agent.Position;
