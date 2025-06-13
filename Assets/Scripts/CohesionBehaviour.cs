@@ -10,8 +10,13 @@ public class CohesionBehaviour : SteeringBehaviour
     public override SteeringOutput GetSteering(Agent agent)
     {
         var settings = agent.Settings;
-        var neighbors = GameObject.FindObjectsOfType<Agent>()
-            .Where(b => b != agent && math.distance(agent.Position.xy, b.Position.xy) < settings.CohesionRadius)
+
+        // Trova i vicini usando il layer dei boid
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(agent.Position.xy, settings.CohesionRadius, settings.BoidLayer);
+
+        var neighbors = colliders
+            .Select(c => c.GetComponent<Agent>())
+            .Where(b => b != agent)
             .ToArray();
 
         if (neighbors.Length == 0)
@@ -27,7 +32,7 @@ public class CohesionBehaviour : SteeringBehaviour
 
         return new SteeringOutput
         {
-            Linear  = dir * maxAcceleration,
+            Linear = dir * maxAcceleration,
             Angular = 0f
         };
     }

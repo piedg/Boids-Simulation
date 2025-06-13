@@ -10,4 +10,6 @@ public class BoidSettings : ScriptableObject
    [Range(0, 10)]
    public int SeparationRadius;
    
+   public LayerMask BoidLayer;
+   
 }

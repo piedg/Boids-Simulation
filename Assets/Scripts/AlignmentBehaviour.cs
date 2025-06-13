@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -6,22 +6,29 @@ using UnityEngine;
 public class AlignmentBehaviour : SteeringBehaviour
 {
     public float maxAcceleration = 5f;
-
+    
     public override SteeringOutput GetSteering(Agent agent)
     {
         var settings = agent.Settings;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(agent.Position.xy, settings.AlignmentRadius, settings.BoidLayer);
+        List<Agent> neighbors = new List<Agent>();
+        
+        foreach (var col in colliders)
+        {
+            Agent neighbor = col.GetComponent<Agent>();
+            if (neighbor != agent)
+            {
+                neighbors.Add(neighbor);
+            }
+        }
 
-        var neighbors = GameObject.FindObjectsOfType<Agent>()
-            .Where(b => b != agent && math.distance(agent.Position.xy, b.Position.xy) < settings.AlignmentRadius)
-            .ToArray();
-
-        if (neighbors.Length == 0)
+        if (neighbors.Count == 0)
             return new SteeringOutput { Linear = float3.zero, Angular = 0f };
 
         float3 avgVel = float3.zero;
         foreach (var b in neighbors)
             avgVel += b.LinearVelocity;
-        avgVel /= neighbors.Length;
+        avgVel /= neighbors.Count;
 
         avgVel.z = 0;
         float3 desired = math.normalizesafe(avgVel) * maxAcceleration;

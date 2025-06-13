@@ -27,7 +27,6 @@ public class BoidsManager : MonoBehaviour
 
    private void Update()
    {
-      
        for (int i = 0; i < Boids.Count; i++)
        {
            Boids[i].SetActive(i < currentBoids);

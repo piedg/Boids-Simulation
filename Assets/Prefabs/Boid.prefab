@@ -94,7 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7538835047151205991}
   - component: {fileID: 1511002240096420450}
-  m_Layer: 0
+  - component: {fileID: 611017699644199321}
+  m_Layer: 6
   m_Name: Boid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,9 +147,43 @@ MonoBehaviour:
     - rid: 1496326763539857433
       type: {class: SeparationBehaviour, ns: , asm: Assembly-CSharp}
       data:
-        radius: 1
         maxAcceleration: 10
     - rid: 1496326763539857435
       type: {class: CohesionBehaviour, ns: , asm: Assembly-CSharp}
       data:
         maxAcceleration: 5
+--- !u!58 &611017699644199321
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4479426762731761102}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
