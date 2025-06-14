@@ -12,3 +12,6 @@ It currently implements the three core Boids behaviours from Reynolds' model, wi
 <b>Separation</b>: Agents avoid crowding by steering away from close neighbors.
 
 <b>Alignment</b>: Agents adjust their velocity to match the direction and speed of nearby agents.
+
+# Try it on itch.io
+Link: https://hcyan.itch.io/boids-ai-simulation
