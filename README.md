@@ -13,5 +13,5 @@ It currently implements the three core Boids behaviours from Reynolds' model, wi
 
 <b>Alignment</b>: Agents adjust their velocity to match the direction and speed of nearby agents.
 
-# Try it on itch.io
+# TRY IT ON ITCH.IO
 Link: https://hcyan.itch.io/boids-ai-simulation
