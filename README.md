@@ -3,7 +3,7 @@
 ## Disclaimer 
 Boids is an artificial life program, developed by Craig Reynolds in 1986, simulating birds' flocking behavior and related group motion.
 
-# FEATURES
+# Features
 This simulation uses steering behaviours to control agent movement.
 It currently implements the three core Boids behaviours from Reynolds' model, with support for adding and customizing new behaviours.
 
@@ -13,5 +13,5 @@ It currently implements the three core Boids behaviours from Reynolds' model, wi
 
 <b>Alignment</b>: Agents adjust their velocity to match the direction and speed of nearby agents.
 
-# TRY IT ON ITCH.IO
+# Try it on itch.io
 Link: https://hcyan.itch.io/boids-ai-simulation
